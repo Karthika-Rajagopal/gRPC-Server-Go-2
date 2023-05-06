@@ -9,19 +9,19 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-type server struct{}
+type server struct{}   //The server struct implements the AddServiceServer interface defined in the proto package
 
 func main() {
-	listener, err := net.Listen("tcp", ":4040")
+	listener, err := net.Listen("tcp", ":4040") //sets up a new TCP listener  
 	if err != nil {
 		panic(err)
 	}
 
-	srv := grpc.NewServer()
+	srv := grpc.NewServer()  //creates a new gRPC server instance
 	proto.RegisterAddServiceServer(srv, &server{})
-	reflection.Register(srv)
+	reflection.Register(srv)  
 
-	if e := srv.Serve(listener); e != nil {
+	if e := srv.Serve(listener); e != nil {   ///the server is started by calling the Serve() method on the gRPC server instance
 		panic(e)
 	}
 
